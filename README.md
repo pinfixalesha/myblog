@@ -1,0 +1,2 @@
+# myblog
+yandex Blog
