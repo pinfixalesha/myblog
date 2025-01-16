@@ -1,113 +1,111 @@
+<!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Название страницы-->
-    <title>Пользователи111 ${users1}</title>
-
-    <!-- Стили страницы -->
+    <title>Посты</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        h1 {
-            text-align: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
+        .post {
             border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .actions {
-            text-align: center;
-        }
-        .form-container {
-            margin-top: 20px;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-        input[type="text"], input[type="number"], input[type="checkbox"] {
-            width: 100%;
-            padding: 5px;
-            margin-top: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-        .btn-add {
+            padding: 15px;
             margin-bottom: 20px;
+        }
+        .post img {
+            max-width: 100%;
+            height: auto;
+        }
+        .tags {
+            color: #555;
+        }
+        .pagination {
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-<h1>Пользователи 111</h1>
-<span th:text="${serverTime}" /></br>
-<button class="btn-add" onclick="toggleForm()">Добавить пользователя</button>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Возраст</th>
-        <th>Активен</th>
-        <th>Действия</th>
-    </tr>
-    </thead>
-    <tbody>
+<h1>Посты</h1>
 
-    <!-- Цикл по пользователям из атрибута users-->
-    <tr th:each="user: ${users}">
-        <td th:text="${user.id}"/> <!-- Вставляем идентификаторы и остальные атрибуты-->
-        <td th:text="${user.firstName}"/>
-        <td th:text="${user.lastName}"/>
-        <td th:text="${user.age}"/>
-        <td th:text="${user.active ? 'Да' : 'Нет'}"/>
-        <td class="actions">
-            <form th:action="@{/users/{id}(id=${user.id})}" method="post" style="display:inline;">
-                <input type="hidden" name="_method" value="delete">
-                <button type="submit">Удалить</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<label for="tagFilter">Фильтрация по тегу:</label>
+<form method="POST">
+    <input type="text" id="tagFilter" name="tagFilter" placeholder="Введите тег поиска" th:value="${filterTags}">
+    <input type="hidden" id="currentPage" name="currentPage" th:value="${currentPage}">
+    <input type="hidden" id="sizePage" name="sizePage" th:value="${sizePage}">
+    <button type="submit">Поиск</button>
+</form>
+<div class="post" th:each="blog: ${blogs}" >
+    <h2 th:text="${blog.title}"/>
+    <img th:src="'data:image/png;base64, '+${blog.picture}" alt="Картинка" width="300" height="200"/>
+    <p th:text="${blog.shotText}"/>
+    <p th:text="'Комментарии: '+${blog.commentsCount}+' | Лайки: '+${blog.likeCount}"/>
+    <p class="tags" th:text="'Теги: '+${blog.tags}"></p>
+</div>
 
-<!-- Скрываемая форма для добавления нового пользователя -->
-<div class="form-container" style="display: none;" id="userForm">
-    <h2>Добавить пользователя</h2>
-    <form th:action="@{/users}" method="POST">
-        <label for="firstName">Имя:</label>
-        <input type="text" id="firstName" name="firstName" required>
-        <label for="lastName">Фамилия:</label>
-        <input type="text" id="lastName" name="lastName" required>
-        <label for="age">Возраст:</label>
-        <input type="number" id="age" name="age" required>
-        <label for="active">Активен:</label>
-        <input type="checkbox" id="active" name="active">
-        <button type="submit">Добавить</button>
-    </form>
+<div class="pagination">
+    <span th:text="'Текущая страница '+${currentPage}+' из '+${totalPage}"/>&nbsp;
+    <span>Показать по :</span>
+    <a th:href="'?p='+${currentPage}+'&s=10&f='+${filterTags}">10</a>&nbsp;
+    <a th:href="'?p='+${currentPage}+'&s=20&f='+${filterTags}">20</a>&nbsp;
+    <a th:href="'?p='+${currentPage}+'&s=50&f='+${filterTags}">50</a>&nbsp;
+    <a th:if="${currentPage > 1}" th:href="'?p='+(${currentPage}-1)+'&s='+${sizePage}+'&f='+${filterTags}">Предыдущая</a>&nbsp;
+    <a th:if="${currentPage < totalPage}" th:href="'?p='+(${currentPage}+1)+'&s='+${sizePage}+'&f='+${filterTags}">Следующая</a>
 </div>
 
 <script>
-    function toggleForm() {
-        const form = document.getElementById('userForm');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    /*
+    let currentPage = 1;
+    let postsPerPage = 10;
+
+    function filterPosts() {
+        const filterValue = document.getElementById('tagFilter').value.toLowerCase();
+        const posts = document.querySelectorAll('.post');
+
+        posts.forEach(post => {
+            const tags = post.getAttribute('data-tags').toLowerCase();
+            post.style.display = tags.includes(filterValue) ? 'block' : 'none';
+        });
+
+        resetPagination();
     }
+
+    function changePostsPerPage() {
+        postsPerPage = parseInt(document.getElementById('postsPerPage').value);
+        resetPagination();
+    }
+
+    function resetPagination() {
+        currentPage = 1;
+        renderPosts();
+    }
+
+    function renderPosts() {
+        const posts = Array.from(document.querySelectorAll('.post'));
+        const totalPosts = posts.filter(post => post.style.display !== 'none').length;
+
+        posts.forEach((post, index) => {
+            post.style.display = (Math.floor(index / postsPerPage) === currentPage - 1) ? 'block' : 'none';
+        });
+
+        // Обновить доступность кнопок пагинации
+        document.querySelector('.pagination').style.display = totalPosts > postsPerPage ? 'block' : 'none';
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPosts();
+        }
+    }
+
+
+    // Инициализация отображения постов
+    renderPosts();
+     */
 </script>
+
 </body>
 </html>

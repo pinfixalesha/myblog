@@ -1,20 +1,19 @@
-package ru.yandex.practicum.model;
+package ru.yandex.practicum.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+
 import java.sql.Timestamp;
 
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class BlogModel {
+public class BlogsEntity {
     private Long id;
     private Timestamp datetime;
     private String title;
-    private String clob;
+    private String text;
     private String picture;
     private String tags;
+    private Integer likeCount;
+    private Integer commentCount;
 }
