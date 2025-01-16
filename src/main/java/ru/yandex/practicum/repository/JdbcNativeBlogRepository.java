@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.yandex.practicum.entities.BlogEntity;
 import ru.yandex.practicum.entities.BlogsEntity;
 
 import java.util.List;
@@ -70,6 +71,24 @@ public class JdbcNativeBlogRepository implements BlogRepository {
         return jdbcTemplate.queryForObject("SELECT count(b.id) FROM blogs as b where upper(tags) like ?",
                 new Object[]{filterTags},
                 Integer.class);
+    }
+
+    @Override
+    public BlogEntity getById(Long id) {
+        return jdbcTemplate.queryForObject(
+                "SELECT b.id, b.datetime, b.title, b.text, b.picture, b.tags, " +
+                        "(SELECT count(id) FROM likes as l WHERE l.blog=b.id) likeCount "+
+                        "FROM blogs as b where id=?",
+                new Object[]{id},
+                (rs, rowNum) -> new BlogEntity(
+                        rs.getLong("id"),
+                        rs.getTimestamp("datetime"),
+                        rs.getString("title"),
+                        rs.getString("text"),
+                        rs.getString("picture"),
+                        rs.getString("tags"),
+                        rs.getInt("likeCount")
+                ));
     }
 
 

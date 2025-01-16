@@ -1,5 +1,6 @@
 package ru.yandex.practicum.repository;
 
+import ru.yandex.practicum.entities.BlogEntity;
 import ru.yandex.practicum.entities.BlogsEntity;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface BlogRepository {
 
     Integer getCountByTag(String filterTags);
 
+    BlogEntity getById(Long id);
 }

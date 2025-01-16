@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пост</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .post { margin-bottom: 40px; }
+        .comments { margin-top: 20px; }
+        .comment { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="post">
+    <h1>Название поста</h1>
+    <img src="image.jpg" alt="Описание картинки" width="600">
+    <p>Первый абзац текста поста.</p>
+    <p>Второй абзац текста поста.</p>
+    <p>Третий абзац текста поста.</p>
+    <div>
+        <strong>Теги:</strong> #тег1 #тег2 #тег3
+    </div>
+    <button onclick="alert('Удалить пост');">Удалить пост</button>
+    <button onclick="alert('Редактирование поста');">Редактировать пост</button>
+    <div>
+        <button onclick="alert('Добавить комментарий');">Добавить комментарий</button>
+        <button onclick="likes++; alert('Лайкно!');">Лайк <span id="likeCount">0</span></button>
+    </div>
+</div>
+
+<div class="comments">
+    <h2>Комментарии</h2>
+
+    <div class="comment">
+        <p>Первый комментарий <button onclick="alert('Редактировать комментарий');">Редактировать</button> <button onclick="alert('Удалить комментарий');">Удалить</button></p>
+    </div>
+
+    <div class="comment">
+        <p>Второй комментарий <button onclick="alert('Редактировать комментарий');">Редактировать</button> <button onclick="alert('Удалить комментарий');">Удалить</button></p>
+    </div>
+
+    <div class="comment">
+        <p>Третий комментарий <button onclick="alert('Редактировать комментарий');">Редактировать</button> <button onclick="alert('Удалить комментарий');">Удалить</button></p>
+    </div>
+</div>
+
+</body>
+</html>

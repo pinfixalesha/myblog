@@ -6,11 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
+import ru.yandex.practicum.model.BlogModel;
 import ru.yandex.practicum.model.BlogsModel;
+import ru.yandex.practicum.model.CommentsModel;
 import ru.yandex.practicum.model.FilterModel;
 import ru.yandex.practicum.service.BlogService;
 
@@ -76,4 +79,12 @@ public class BlogController {
         return getBlogs(filterModel.getCurrentPage(), filterModel.getSizePage(), filterModel.getTagFilter(), model);
     }
 
+    @GetMapping("/{id}")
+    public String getBlog(@PathVariable(name = "id") Long id, Model model) {
+        BlogModel blog=blogService.getById(id);
+        //List<CommentsModel> comments=commentService.findAll(id);
+        model.addAttribute("blog", blog);
+        //model.addAttribute("comments", comments);
+        return "blogView";
+    }
 }

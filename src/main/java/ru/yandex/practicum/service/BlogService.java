@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.mapping.BlogMapper;
+import ru.yandex.practicum.model.BlogModel;
 import ru.yandex.practicum.model.BlogsModel;
 import ru.yandex.practicum.repository.BlogRepository;
 
@@ -39,6 +40,10 @@ public class BlogService {
 
     public Integer getCountByTag(String filterTags) {
         return blogRepository.getCountByTag(filterTags);
+    }
+
+    public BlogModel getById(Long id) {
+        return blogMapping.mapToModel(blogRepository.getById(id));
     }
 
 
