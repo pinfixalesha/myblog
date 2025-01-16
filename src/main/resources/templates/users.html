@@ -1,0 +1,113 @@
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Название страницы-->
+    <title>Пользователи111 ${users1}</title>
+
+    <!-- Стили страницы -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .actions {
+            text-align: center;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"], input[type="checkbox"] {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .btn-add {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Пользователи 111</h1>
+<span th:text="${serverTime}" /></br>
+<button class="btn-add" onclick="toggleForm()">Добавить пользователя</button>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Возраст</th>
+        <th>Активен</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <!-- Цикл по пользователям из атрибута users-->
+    <tr th:each="user: ${users}">
+        <td th:text="${user.id}"/> <!-- Вставляем идентификаторы и остальные атрибуты-->
+        <td th:text="${user.firstName}"/>
+        <td th:text="${user.lastName}"/>
+        <td th:text="${user.age}"/>
+        <td th:text="${user.active ? 'Да' : 'Нет'}"/>
+        <td class="actions">
+            <form th:action="@{/users/{id}(id=${user.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit">Удалить</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Скрываемая форма для добавления нового пользователя -->
+<div class="form-container" style="display: none;" id="userForm">
+    <h2>Добавить пользователя</h2>
+    <form th:action="@{/users}" method="POST">
+        <label for="firstName">Имя:</label>
+        <input type="text" id="firstName" name="firstName" required>
+        <label for="lastName">Фамилия:</label>
+        <input type="text" id="lastName" name="lastName" required>
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name="age" required>
+        <label for="active">Активен:</label>
+        <input type="checkbox" id="active" name="active">
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+
+<script>
+    function toggleForm() {
+        const form = document.getElementById('userForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+</body>
+</html>
