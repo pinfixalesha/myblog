@@ -1,6 +1,7 @@
 package ru.yandex.practicum.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,11 +11,13 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BlogModel {
+@Builder
+public class BlogsModel {
     private Long id;
-    private Timestamp datetime;
     private String title;
-    private String clob;
+    private String shotText;
     private String picture;
     private String tags;
+    private Integer commentsCount;
+    private Integer likeCount;
 }
