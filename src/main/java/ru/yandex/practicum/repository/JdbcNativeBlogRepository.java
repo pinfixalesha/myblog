@@ -22,8 +22,8 @@ public class JdbcNativeBlogRepository implements BlogRepository {
         int offset = (page - 1) * size;
         return jdbcTemplate.query(
                 "SELECT b.id, b.datetime, b.title, b.text, b.picture, b.tags, " +
-                        "(SELECT count(id) FROM comments as c WHERE c.blog=b.id) ccomments, "+
-                        "(SELECT count(id) FROM likes as l WHERE l.blog=b.id) clike "+
+                        "(SELECT count(id) FROM comments as c WHERE c.blog=b.id) ccomments, " +
+                        "(SELECT count(id) FROM likes as l WHERE l.blog=b.id) clike " +
                         "FROM blogs as b ORDER BY b.datetime DESC LIMIT ? OFFSET ?",
                 new Object[]{size, offset},
                 (rs, rowNum) -> new BlogsEntity(
@@ -46,11 +46,11 @@ public class JdbcNativeBlogRepository implements BlogRepository {
     @Override
     public List<BlogsEntity> findPageByTag(Integer page, Integer size, String filterTags) {
         int offset = (page - 1) * size;
-        filterTags="%#"+filterTags.toUpperCase()+"%";
+        filterTags = "%#" + filterTags.toUpperCase() + "%";
         return jdbcTemplate.query(
                 "SELECT b.id, b.datetime, b.title, b.text, b.picture, b.tags, " +
-                        "(SELECT count(id) FROM comments as c WHERE c.blog=b.id) ccomments, "+
-                        "(SELECT count(id) FROM likes as l WHERE l.blog=b.id) clike "+
+                        "(SELECT count(id) FROM comments as c WHERE c.blog=b.id) ccomments, " +
+                        "(SELECT count(id) FROM likes as l WHERE l.blog=b.id) clike " +
                         "FROM blogs as b where upper(tags) like ? ORDER BY b.datetime DESC LIMIT ? OFFSET ?",
                 new Object[]{filterTags, size, offset},
                 (rs, rowNum) -> new BlogsEntity(
@@ -67,7 +67,7 @@ public class JdbcNativeBlogRepository implements BlogRepository {
 
     @Override
     public Integer getCountByTag(String filterTags) {
-        filterTags="%#"+filterTags.toUpperCase()+"%";
+        filterTags = "%#" + filterTags.toUpperCase() + "%";
         return jdbcTemplate.queryForObject("SELECT count(b.id) FROM blogs as b where upper(tags) like ?",
                 new Object[]{filterTags},
                 Integer.class);
@@ -77,7 +77,7 @@ public class JdbcNativeBlogRepository implements BlogRepository {
     public BlogEntity getById(Long id) {
         return jdbcTemplate.queryForObject(
                 "SELECT b.id, b.datetime, b.title, b.text, b.picture, b.tags, " +
-                        "(SELECT count(id) FROM likes as l WHERE l.blog=b.id) likeCount "+
+                        "(SELECT count(id) FROM likes as l WHERE l.blog=b.id) likeCount " +
                         "FROM blogs as b where id=?",
                 new Object[]{id},
                 (rs, rowNum) -> new BlogEntity(
@@ -89,6 +89,13 @@ public class JdbcNativeBlogRepository implements BlogRepository {
                         rs.getString("tags"),
                         rs.getInt("likeCount")
                 ));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        jdbcTemplate.update("delete from comments where blog = ?; " +
+                "delete from likes where blog = ?; " +
+                "delete from blogs where id = ?; ", id, id, id);
     }
 
 

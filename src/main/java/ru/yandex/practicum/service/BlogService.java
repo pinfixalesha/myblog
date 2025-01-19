@@ -46,5 +46,9 @@ public class BlogService {
         return blogMapping.mapToModel(blogRepository.getById(id));
     }
 
+    public void deleteById(Long id)
+    {
+        blogRepository.deleteById(id);
+    }
 
 }

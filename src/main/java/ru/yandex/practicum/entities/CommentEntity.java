@@ -1,19 +1,22 @@
 package ru.yandex.practicum.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class CommentEntity {
     private Long id;
-    private LocalDateTime datetime;
+    private Timestamp datetime;
     private Long blog;
     private String comment;
 }

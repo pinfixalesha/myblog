@@ -15,4 +15,7 @@ public interface BlogRepository {
     Integer getCountByTag(String filterTags);
 
     BlogEntity getById(Long id);
+
+    void deleteById(Long id);
+
 }

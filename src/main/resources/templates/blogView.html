@@ -12,39 +12,88 @@
     </style>
 </head>
 <body>
-
+<a th:href="@{/blog}">Все посты</a>
 <div class="post">
-    <h1>Название поста</h1>
-    <img src="image.jpg" alt="Описание картинки" width="600">
-    <p>Первый абзац текста поста.</p>
-    <p>Второй абзац текста поста.</p>
-    <p>Третий абзац текста поста.</p>
+    <h1 th:text="${blog.title}"/>
+    <img th:src="'data:image/png;base64, '+${blog.picture}" alt="Картинка"/>
+    <p th:text="${blog.text}"/>
     <div>
-        <strong>Теги:</strong> #тег1 #тег2 #тег3
+        <strong th:text="'Теги: '+${blog.tags}"/>
     </div>
-    <button onclick="alert('Удалить пост');">Удалить пост</button>
+    <form th:action="@{/blog/{id}(id=${blog.id})}" method="post" style="display:inline;">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit">Удалить пост</button>
+    </form>
     <button onclick="alert('Редактирование поста');">Редактировать пост</button>
     <div>
-        <button onclick="alert('Добавить комментарий');">Добавить комментарий</button>
-        <button onclick="likes++; alert('Лайкно!');">Лайк <span id="likeCount">0</span></button>
+        <form th:action="@{/blog/{id}(id=${blog.id})}" method="post" style="display:inline;">
+            <input type="hidden" name="_method" value="like"/>
+            <button type="submit">Лайк <span id="likeCount" th:text="${blog.likeCount}"/></button>
+        </form>
+    </div>
+    <div style="display:none;" id="commentEdt_0">
+        <form th:action="@{/blog/{id}(id=${blog.id})}" method="post">
+            <input type="hidden" name="_method" value="newComment"/>
+            <input type="hidden" name="blog" id="blog" th:value="${blog.id}"/>
+            <textarea name="comment" id="comment" rows="4" cols="50" maxlength="1024"
+                      onkeydown="checkKey(event, this.form)"></textarea>
+            <button type="submit">Сохранить</button>
+            <button type="button" onclick="cancelComment(0);">Отмена</button>
+        </form>
+    </div>
+
+    <div style="display:block;" id="commentView_0">
+        <button onclick="editComment(0);">Добавить комментарий</button>
     </div>
 </div>
 
 <div class="comments">
     <h2>Комментарии</h2>
 
-    <div class="comment">
-        <p>Первый комментарий <button onclick="alert('Редактировать комментарий');">Редактировать</button> <button onclick="alert('Удалить комментарий');">Удалить</button></p>
-    </div>
-
-    <div class="comment">
-        <p>Второй комментарий <button onclick="alert('Редактировать комментарий');">Редактировать</button> <button onclick="alert('Удалить комментарий');">Удалить</button></p>
-    </div>
-
-    <div class="comment">
-        <p>Третий комментарий <button onclick="alert('Редактировать комментарий');">Редактировать</button> <button onclick="alert('Удалить комментарий');">Удалить</button></p>
+    <div class="comment" th:each="comment: ${comments}">
+        <div style="display:none;" th:id="'commentEdt_'+${comment.id}">
+            <form th:action="@{/blog/{id}(id=${blog.id})}" method="post">
+                <input type="hidden" name="_method" value="editComment"/>
+                <input type="hidden" name="id" id="id" th:value="${comment.id}"/>
+                <input type="hidden" name="blog" id="blog" th:value="${blog.id}"/>
+                <textarea name="comment" id="comment" rows="4" cols="50" maxlength="1024"
+                          onkeydown="checkKey(event, this.form)"
+                          th:text="${comment.comment}"/>
+                <button type="submit">Сохранить</button>
+                <button type="button" th:onclick="'cancelComment('+${comment.id}+');'">Отмена</button>
+            </form>
+        </div>
+        <div style="display:block;" th:id="'commentView_'+${comment.id}">
+            <p th:text="${comment.comment}"/>
+            <button th:onclick="'editComment('+${comment.id}+');'">Редактировать</button>
+            <form th:action="@{/blog/{id}(id=${blog.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="deleteComment"/>
+                <input type="hidden" name="comment" th:value="${comment.id}"/>
+                <button type="submit">Удалить</button>
+            </form>
+        </div>
     </div>
 </div>
+
+<script>
+    function checkKey(e, form) {
+        if (e.ctrlKey && e.keyCode == 13) form.submit();
+    }
+
+    function editComment(button) {
+        document.getElementById('commentEdt_'+button).style.display = 'block';
+        document.getElementById('commentView_'+button).style.display = 'none';
+        return false;
+    };
+
+    function cancelComment(button) {
+        document.getElementById('commentEdt_'+button).style.display = 'none';
+        document.getElementById('commentView_'+button).style.display = 'block';
+        return false;
+    };
+
+
+</script>
 
 </body>
 </html>
