@@ -1,12 +1,9 @@
 package ru.yandex.practicum.repository;
 
 import lombok.AllArgsConstructor;
-import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.entities.BlogEntity;
-import ru.yandex.practicum.entities.BlogsEntity;
 import ru.yandex.practicum.entities.CommentEntity;
 
 import java.util.List;

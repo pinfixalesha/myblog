@@ -1,8 +1,5 @@
 package ru.yandex.practicum.repository;
 
-import org.h2.engine.User;
-import ru.yandex.practicum.entities.BlogEntity;
-import ru.yandex.practicum.entities.BlogsEntity;
 import ru.yandex.practicum.entities.CommentEntity;
 
 import java.util.List;
