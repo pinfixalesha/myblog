@@ -1,12 +1,14 @@
 package ru.yandex.practicum.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
+@Builder
 public class BlogEntity {
     private Long id;
     private Timestamp datetime;

@@ -36,14 +36,12 @@ public class JdbcNativeCommentRepository implements CommentRepository {
 
     @Override
     public void save(CommentEntity comment) {
-        // Формируем insert-запрос с параметрами
         jdbcTemplate.update("update comments SET comment=? WHERE id=?",
                 comment.getComment(),comment.getId());
     }
 
     @Override
     public void create(CommentEntity comment) {
-        // Формируем insert-запрос с параметрами
         jdbcTemplate.update("insert into comments(blog, comment) values ( ?,?);",
                 comment.getBlog(),comment.getComment());
     }

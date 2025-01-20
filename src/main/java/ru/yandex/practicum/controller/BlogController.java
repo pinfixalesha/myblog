@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
+import ru.yandex.practicum.entities.BlogEntity;
+import ru.yandex.practicum.model.BlogEditModel;
 import ru.yandex.practicum.model.BlogModel;
 import ru.yandex.practicum.model.BlogsModel;
 import ru.yandex.practicum.model.CommentsModel;
@@ -19,6 +22,7 @@ import ru.yandex.practicum.service.BlogService;
 import ru.yandex.practicum.service.CommentService;
 import ru.yandex.practicum.service.LikeService;
 
+import javax.servlet.annotation.MultipartConfig;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +41,6 @@ public class BlogController {
 
     @Autowired
     private final LikeService likeService;
-
 
     @GetMapping
     public String getFirstPageBlogs(@RequestParam(required = false, name = "p") String page,
@@ -131,4 +134,19 @@ public class BlogController {
         return "redirect:/blog";
     }
 
+    @PostMapping(value = "/new")
+    public String newBlog(BlogEditModel blogEditModel) {
+        if (!StringUtils.isEmpty(blogEditModel.getTitle())) {
+            blogService.create(blogEditModel);
+        }
+        return "redirect:/blog";
+    }
+
+    @PostMapping(value = "/edit")
+    public String editBlog(BlogEditModel blogEditModel) {
+        if (!StringUtils.isEmpty(blogEditModel.getTitle())) {
+            blogService.save(blogEditModel);
+        }
+        return "redirect:/blog/"+blogEditModel.getId();
+    }
 }

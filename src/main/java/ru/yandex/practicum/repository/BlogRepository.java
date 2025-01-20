@@ -2,7 +2,6 @@ package ru.yandex.practicum.repository;
 
 import ru.yandex.practicum.entities.BlogEntity;
 import ru.yandex.practicum.entities.BlogsEntity;
-
 import java.util.List;
 
 public interface BlogRepository {
@@ -17,5 +16,9 @@ public interface BlogRepository {
     BlogEntity getById(Long id);
 
     void deleteById(Long id);
+
+    void save(BlogEntity blogEntity);
+
+    void create(BlogEntity blogEntity);
 
 }

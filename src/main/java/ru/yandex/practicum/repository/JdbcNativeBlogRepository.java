@@ -98,5 +98,24 @@ public class JdbcNativeBlogRepository implements BlogRepository {
                 "delete from blogs where id = ?; ", id, id, id);
     }
 
+    @Override
+    public void save(BlogEntity blogEntity) {
+        jdbcTemplate.update("update blogs set title=?, text=?, picture=?, tags=? where id = ?;",
+                blogEntity.getTitle(),
+                blogEntity.getText(),
+                blogEntity.getPicture(),
+                blogEntity.getTags(),
+                blogEntity.getId());
+    }
+
+    @Override
+    public void create(BlogEntity blogEntity) {
+        jdbcTemplate.update("insert into blogs(title, text, picture, tags) values (?, ?, ?, ?);",
+                blogEntity.getTitle(),
+                blogEntity.getText(),
+                blogEntity.getPicture(),
+                blogEntity.getTags());
+    }
+
 
 }

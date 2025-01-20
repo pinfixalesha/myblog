@@ -23,6 +23,14 @@
       <param-value>ru.yandex.practicum.WebConfiguration</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+    <multipart-config>
+      <!--The file size is 2M-->
+      <max-file-size>2097152</max-file-size>
+      <!--The entire request does not exceed 4M-->
+      <max-request-size>4194304</max-request-size>
+      <!--All files must be written to disk-->
+      <file-size-threshold>2097152</file-size-threshold>
+    </multipart-config>
   </servlet>
 
   <!-- DispatcherServlet обрабатывает все запросы -->

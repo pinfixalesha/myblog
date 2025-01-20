@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.mapping.BlogMapper;
+import ru.yandex.practicum.model.BlogEditModel;
 import ru.yandex.practicum.model.BlogModel;
 import ru.yandex.practicum.model.BlogsModel;
+import ru.yandex.practicum.model.CommentsModel;
 import ru.yandex.practicum.repository.BlogRepository;
 
 import java.util.List;
@@ -49,6 +51,16 @@ public class BlogService {
     public void deleteById(Long id)
     {
         blogRepository.deleteById(id);
+    }
+
+    public void create(BlogEditModel blogEditModel)
+    {
+        blogRepository.create(blogMapping.mapToEntity(blogEditModel));
+    }
+
+    public void save(BlogEditModel blogEditModel)
+    {
+        blogRepository.save(blogMapping.mapToEntity(blogEditModel));
     }
 
 }

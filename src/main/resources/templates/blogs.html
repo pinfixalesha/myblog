@@ -30,6 +30,26 @@
 <body>
 <h1>Посты</h1>
 
+<div style="display:none;" id="blogNew">
+    <form th:action="@{/blog/new}" enctype="multipart/form-data" method="post" >
+        <label for="title">Введите названия поста:</label>
+        <input type="text" id="title" name="title" placeholder="Введите названия поста"/><br>
+        <label for="picture">Картинка поста:</label>
+        <input type="file" id="picture" name="picture" accept="image/*"/><br>
+        <label for="text">Тест поста:</label>
+        <textarea name="text" id="text" rows="20" cols="50"></textarea><br>
+        <label for="tags">Укажите теги поста:</label>
+        <input type="text" id="tags" name="tags" placeholder="Укажите теги поста"/><br>
+
+        <button type="submit">Сохранить</button>
+        <button type="button" onclick="cancelNewBlog();">Отмена</button>
+    </form>
+</div>
+
+<div style="display:block;" id="blogView">
+    <button onclick="newBlog();">Добавить новый пост</button>
+</div>
+
 <label for="tagFilter">Фильтрация по тегу:</label>
 <form method="POST">
     <input type="text" id="tagFilter" name="tagFilter" placeholder="Введите тег поиска" th:value="${filterTags}">
@@ -39,7 +59,7 @@
 </form>
 <div class="post" th:each="blog: ${blogs}" >
     <h2><a th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}"></a></h2>
-    <img th:src="'data:image/png;base64, '+${blog.picture}" alt="Картинка" width="300" height="200"/>
+    <img th:if="${blog.picture != null && blog.picture.length>0}" th:src="'data:image/png;base64, '+${blog.picture}" alt="Картинка" width="300" height="200"/>
     <p th:text="${blog.shotText}"/>
     <p th:text="'Комментарии: '+${blog.commentsCount}+' | Лайки: '+${blog.likeCount}"/>
     <p class="tags" th:text="'Теги: '+${blog.tags}"></p>
@@ -56,55 +76,20 @@
 </div>
 
 <script>
-    /*
-    let currentPage = 1;
-    let postsPerPage = 10;
+    function newBlog() {
+        document.getElementById('blogNew').style.display = 'block';
+        document.getElementById('blogView').style.display = 'none';
+        return false;
+    };
 
-    function filterPosts() {
-        const filterValue = document.getElementById('tagFilter').value.toLowerCase();
-        const posts = document.querySelectorAll('.post');
-
-        posts.forEach(post => {
-            const tags = post.getAttribute('data-tags').toLowerCase();
-            post.style.display = tags.includes(filterValue) ? 'block' : 'none';
-        });
-
-        resetPagination();
-    }
-
-    function changePostsPerPage() {
-        postsPerPage = parseInt(document.getElementById('postsPerPage').value);
-        resetPagination();
-    }
-
-    function resetPagination() {
-        currentPage = 1;
-        renderPosts();
-    }
-
-    function renderPosts() {
-        const posts = Array.from(document.querySelectorAll('.post'));
-        const totalPosts = posts.filter(post => post.style.display !== 'none').length;
-
-        posts.forEach((post, index) => {
-            post.style.display = (Math.floor(index / postsPerPage) === currentPage - 1) ? 'block' : 'none';
-        });
-
-        // Обновить доступность кнопок пагинации
-        document.querySelector('.pagination').style.display = totalPosts > postsPerPage ? 'block' : 'none';
-    }
-
-    function prevPage() {
-        if (currentPage > 1) {
-            currentPage--;
-            renderPosts();
-        }
-    }
+    function cancelNewBlog() {
+        document.getElementById('blogNew').style.display = 'none';
+        document.getElementById('blogView').style.display = 'block';
+        return false;
+    };
 
 
-    // Инициализация отображения постов
-    renderPosts();
-     */
+</script>
 </script>
 
 </body>
