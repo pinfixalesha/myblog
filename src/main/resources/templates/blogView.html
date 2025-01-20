@@ -17,7 +17,7 @@
     <h1 th:text="${blog.title}"/>
 
     <img  th:if="${blog.picture != null && blog.picture.length>0}" th:src="'data:image/png;base64, '+${blog.picture}" alt="Картинка"/>
-    <p th:text="${blog.text}"/>
+    <p  th:each="textParagraph: ${blog.textByParagraph}" th:text="${textParagraph}"/>
     <div>
         <strong th:text="'Теги: '+${blog.tags}"/>
     </div>
