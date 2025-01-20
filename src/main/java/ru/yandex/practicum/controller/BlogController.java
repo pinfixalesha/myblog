@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
-import ru.yandex.practicum.entities.BlogEntity;
 import ru.yandex.practicum.model.BlogEditModel;
 import ru.yandex.practicum.model.BlogModel;
 import ru.yandex.practicum.model.BlogsModel;
@@ -21,8 +19,6 @@ import ru.yandex.practicum.model.FilterModel;
 import ru.yandex.practicum.service.BlogService;
 import ru.yandex.practicum.service.CommentService;
 import ru.yandex.practicum.service.LikeService;
-
-import javax.servlet.annotation.MultipartConfig;
 import java.util.List;
 import java.util.Optional;
 

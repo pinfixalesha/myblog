@@ -1,17 +1,12 @@
 package ru.yandex.practicum.mapping;
 
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 import ru.yandex.practicum.entities.BlogEntity;
 import ru.yandex.practicum.entities.BlogsEntity;
-import ru.yandex.practicum.entities.CommentEntity;
 import ru.yandex.practicum.model.BlogEditModel;
 import ru.yandex.practicum.model.BlogModel;
 import ru.yandex.practicum.model.BlogsModel;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.stream.Collectors;

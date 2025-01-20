@@ -7,7 +7,6 @@ import ru.yandex.practicum.mapping.BlogMapper;
 import ru.yandex.practicum.model.BlogEditModel;
 import ru.yandex.practicum.model.BlogModel;
 import ru.yandex.practicum.model.BlogsModel;
-import ru.yandex.practicum.model.CommentsModel;
 import ru.yandex.practicum.repository.BlogRepository;
 
 import java.util.List;
