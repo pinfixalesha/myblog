@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пост</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .post { margin-bottom: 40px; }
+        .comments { margin-top: 20px; }
+        .comment { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<a th:href="@{/blog}">Все посты</a>&nbsp;
+<div class="post">
+    <h1 th:text="${blog.title}"/>
+
+    <img  th:if="${blog.picture != null && blog.picture.length>0}" th:src="'data:image/png;base64, '+${blog.picture}" alt="Картинка"/>
+    <p  th:each="textParagraph: ${blog.textByParagraph}" th:text="${textParagraph}"/>
+    <div>
+        <strong th:text="'Теги: '+${blog.tags}"/>
+    </div>
+    <!-- ================Редактирование поста======================-->
+    <div style="display:none;" id="blogEdit">
+        <form action="edit" enctype="multipart/form-data" method="post" >
+            <input type="hidden" name="id" id="id" th:value="${blog.id}"/>
+            <label for="title">Введите названия поста:</label>
+            <input type="text" id="title" name="title" placeholder="Введите названия поста" th:value="${blog.title}"/><br>
+            <label for="picture">Картинка поста:</label>
+            <input type="file" id="picture" name="picture" accept="image/*"/><br>
+            <label for="text">Тест поста:</label>
+            <textarea name="text" id="text" rows="20" cols="50" th:text="${blog.text}"></textarea><br>
+            <label for="tags">Укажите теги поста:</label>
+            <input type="text" id="tags" name="tags" placeholder="Укажите теги поста" th:value="${blog.tags}"/><br>
+
+            <button type="submit">Сохранить</button>
+            <button type="button" onclick="cancelEditBlog();">Отмена</button>
+        </form>
+    </div>
+
+    <div style="display:block;" id="blogView">
+        <button onclick="editBlog();">Редактировать пост</button>
+    </div>
+    <!-- ================Удаление поста======================-->
+    <form th:action="@{/blog/{id}(id=${blog.id})}" method="post" style="display:inline;">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit">Удалить пост</button>
+    </form>
+    <div>
+        <form th:action="@{/blog/{id}(id=${blog.id})}" method="post" style="display:inline;">
+            <input type="hidden" name="_method" value="like"/>
+            <button type="submit">Лайк <span id="likeCount" th:text="${blog.likeCount}"/></button>
+        </form>
+    </div>
+    <div style="display:none;" id="commentEdt_0">
+        <form th:action="@{/blog/{id}(id=${blog.id})}" method="post">
+            <input type="hidden" name="_method" value="newComment"/>
+            <input type="hidden" name="blog" id="blog" th:value="${blog.id}"/>
+            <textarea name="comment" id="comment0" rows="4" cols="50" maxlength="1024"
+                      onkeydown="checkKey(event, this.form)"></textarea>
+            <button type="submit">Сохранить</button>
+            <button type="button" onclick="cancelComment(0);">Отмена</button>
+        </form>
+    </div>
+    <div style="display:block;" id="commentView_0">
+        <button onclick="editComment(0);">Добавить комментарий</button>
+    </div>
+</div>
+
+<div class="comments">
+    <h2>Комментарии</h2>
+
+    <div class="comment" th:each="comment: ${comments}">
+        <div style="display:none;" th:id="'commentEdt_'+${comment.id}">
+            <form th:action="@{/blog/{id}(id=${blog.id})}" method="post">
+                <input type="hidden" name="_method" value="editComment"/>
+                <input type="hidden" name="id" id="id" th:value="${comment.id}"/>
+                <input type="hidden" name="blog" id="blog" th:value="${blog.id}"/>
+                <textarea name="comment" id="comment" rows="4" cols="50" maxlength="1024"
+                          onkeydown="checkKey(event, this.form)"
+                          th:text="${comment.comment}"/>
+                <button type="submit">Сохранить</button>
+                <button type="button" th:onclick="'cancelComment('+${comment.id}+');'">Отмена</button>
+            </form>
+        </div>
+        <div style="display:block;" th:id="'commentView_'+${comment.id}">
+            <p th:text="${comment.comment}"/>
+            <button th:onclick="'editComment('+${comment.id}+');'">Редактировать</button>
+            <form th:action="@{/blog/{id}(id=${blog.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="deleteComment"/>
+                <input type="hidden" name="comment" th:value="${comment.id}"/>
+                <button type="submit">Удалить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkKey(e, form) {
+        if (e.ctrlKey && e.keyCode == 13) form.submit();
+    }
+
+    function editComment(button) {
+        document.getElementById('commentEdt_'+button).style.display = 'block';
+        document.getElementById('commentView_'+button).style.display = 'none';
+        return false;
+    }
+
+    function cancelComment(button) {
+        document.getElementById('commentEdt_'+button).style.display = 'none';
+        document.getElementById('commentView_'+button).style.display = 'block';
+        return false;
+    }
+
+    function editBlog() {
+        document.getElementById('blogEdit').style.display = 'block';
+        document.getElementById('blogView').style.display = 'none';
+        return false;
+    }
+
+    function cancelEditBlog() {
+        document.getElementById('blogEdit').style.display = 'none';
+        document.getElementById('blogView').style.display = 'block';
+        return false;
+    }
+</script>
+
+</body>
+</html>
