@@ -28,8 +28,6 @@ import java.util.Optional;
 @RequestMapping("/blog")
 public class CommentController {
 
-    private final static Integer DEFAULT_SIZE_PAGE = 10;
-
     @Autowired
     private final CommentService commentService;
 
