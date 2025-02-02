@@ -18,6 +18,8 @@ public interface BlogRepository {
 
     void deleteById(Long id);
 
+    void deleteAll();
+
     void save(BlogEntity blogEntity);
 
     void create(BlogEntity blogEntity);

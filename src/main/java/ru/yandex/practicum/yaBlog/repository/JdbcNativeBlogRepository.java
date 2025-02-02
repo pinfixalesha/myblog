@@ -99,6 +99,13 @@ public class JdbcNativeBlogRepository implements BlogRepository {
     }
 
     @Override
+    public void deleteAll() {
+        jdbcTemplate.update("delete from comments; " +
+                "delete from likes; " +
+                "delete from blogs; ");
+    }
+
+    @Override
     public void save(BlogEntity blogEntity) {
         jdbcTemplate.update("update blogs set title=?, text=?, picture=?, tags=? where id = ?;",
                 blogEntity.getTitle(),
