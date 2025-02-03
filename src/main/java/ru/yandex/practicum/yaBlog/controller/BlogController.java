@@ -88,8 +88,8 @@ public class BlogController {
 
     @GetMapping("/{id}")
     public String getBlog(@PathVariable(name = "id") Long id, Model model) {
-        BlogModel blog=blogService.getById(id);
-        List<CommentsModel> comments=commentService.findAll(id);
+        BlogModel blog = blogService.getById(id);
+        List<CommentsModel> comments = commentService.findAll(id);
         model.addAttribute("blog", blog);
         model.addAttribute("comments", comments);
         return "blogView";
@@ -114,6 +114,6 @@ public class BlogController {
         if (!StringUtils.isEmpty(blogEditModel.getTitle())) {
             blogService.save(blogEditModel);
         }
-        return "redirect:/blog/"+blogEditModel.getId();
+        return "redirect:/blog/" + blogEditModel.getId();
     }
 }

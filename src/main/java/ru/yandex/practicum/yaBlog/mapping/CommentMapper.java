@@ -7,7 +7,7 @@ import ru.yandex.practicum.yaBlog.model.CommentsModel;
 @Service
 public class CommentMapper {
 
-    public CommentsModel mapToModel(CommentEntity entity){
+    public CommentsModel mapToModel(CommentEntity entity) {
         return CommentsModel.builder()
                 .id(entity.getId())
                 .blog(entity.getBlog())
@@ -15,7 +15,7 @@ public class CommentMapper {
                 .build();
     }
 
-    public CommentEntity mapToEntity(CommentsModel entity){
+    public CommentEntity mapToEntity(CommentsModel entity) {
         return CommentEntity.builder()
                 .id(entity.getId())
                 .blog(entity.getBlog())

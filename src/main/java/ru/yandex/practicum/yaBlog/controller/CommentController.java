@@ -32,23 +32,23 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping(value = "/{id}", params = "_method=deleteComment")
-    public String deleteComment(@PathVariable(name = "id") Long blogId,@RequestParam(name = "comment") Long commentId) {
+    public String deleteComment(@PathVariable(name = "id") Long blogId, @RequestParam(name = "comment") Long commentId) {
         commentService.deleteById(commentId);
-        return "redirect:/blog/"+blogId;
+        return "redirect:/blog/" + blogId;
     }
 
     @PostMapping(value = "/{id}", params = "_method=editComment")
     public String editComment(@PathVariable(name = "id") Long blogId,
                               CommentsModel commentsModel) {
         commentService.save(commentsModel);
-        return "redirect:/blog/"+blogId;
+        return "redirect:/blog/" + blogId;
     }
 
     @PostMapping(value = "/{id}", params = "_method=newComment")
     public String newComment(@PathVariable(name = "id") Long blogId,
-                              CommentsModel commentsModel) {
+                             CommentsModel commentsModel) {
         commentService.create(commentsModel);
-        return "redirect:/blog/"+blogId;
+        return "redirect:/blog/" + blogId;
     }
 
 }

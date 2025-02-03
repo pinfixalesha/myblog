@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class BlogMapper {
 
-    public BlogsModel mapToModel(BlogsEntity entity){
+    public BlogsModel mapToModel(BlogsEntity entity) {
         return BlogsModel.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
@@ -29,7 +29,7 @@ public class BlogMapper {
                 .build();
     }
 
-    public BlogModel mapToModel(BlogEntity entity){
+    public BlogModel mapToModel(BlogEntity entity) {
         return BlogModel.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
@@ -42,7 +42,7 @@ public class BlogMapper {
                 .build();
     }
 
-    public BlogEntity mapToEntity(BlogEditModel blogEditModel){
+    public BlogEntity mapToEntity(BlogEditModel blogEditModel) {
         BlogEntity blogEntity = BlogEntity.builder()
                 .id(blogEditModel.getId())
                 .title(blogEditModel.getTitle())

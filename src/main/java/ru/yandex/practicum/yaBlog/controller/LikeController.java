@@ -34,7 +34,7 @@ public class LikeController {
     @PostMapping(value = "/{id}", params = "_method=like")
     public String addLike(@PathVariable(name = "id") Long blogId) {
         likeService.addLike(blogId);
-        return "redirect:/blog/"+blogId;
+        return "redirect:/blog/" + blogId;
     }
 
 }

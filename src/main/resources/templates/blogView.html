@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Пост</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
@@ -12,7 +12,7 @@
     </style>
 </head>
 <body>
-<a th:href="@{/blog}">Все посты</a>&nbsp;
+<a th:href="@{/blog}">Все посты</a>
 <div class="post">
     <h1 th:text="${blog.title}"/>
 
@@ -26,13 +26,13 @@
         <form action="edit" enctype="multipart/form-data" method="post" >
             <input type="hidden" name="id" id="id" th:value="${blog.id}"/>
             <label for="title">Введите названия поста:</label>
-            <input type="text" id="title" name="title" placeholder="Введите названия поста" th:value="${blog.title}"/><br>
+            <input type="text" id="title" name="title" placeholder="Введите названия поста" th:value="${blog.title}"/><br/>
             <label for="picture">Картинка поста:</label>
-            <input type="file" id="picture" name="picture" accept="image/*"/><br>
+            <input type="file" id="picture" name="picture" accept="image/*"/><br/>
             <label for="text">Тест поста:</label>
-            <textarea name="text" id="text" rows="20" cols="50" th:text="${blog.text}"></textarea><br>
+            <textarea name="text" id="text" rows="20" cols="50" th:text="${blog.text}"></textarea><br/>
             <label for="tags">Укажите теги поста:</label>
-            <input type="text" id="tags" name="tags" placeholder="Укажите теги поста" th:value="${blog.tags}"/><br>
+            <input type="text" id="tags" name="tags" placeholder="Укажите теги поста" th:value="${blog.tags}"/><br/>
 
             <button type="submit">Сохранить</button>
             <button type="button" onclick="cancelEditBlog();">Отмена</button>
@@ -98,7 +98,9 @@
 
 <script>
     function checkKey(e, form) {
-        if (e.ctrlKey && e.keyCode == 13) form.submit();
+        if (e.ctrlKey) {
+            if (e.keyCode == 13) form.submit();
+        }
     }
 
     function editComment(button) {
