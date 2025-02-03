@@ -1,11 +1,9 @@
 package ru.yandex.practicum.yaBlog.servicetest;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockReset;
@@ -15,13 +13,9 @@ import ru.yandex.practicum.yaBlog.entities.CommentEntity;
 import ru.yandex.practicum.yaBlog.mapping.CommentMapper;
 import ru.yandex.practicum.yaBlog.model.CommentsModel;
 import ru.yandex.practicum.yaBlog.repository.CommentRepository;
-import ru.yandex.practicum.yaBlog.repository.LikeRepository;
 import ru.yandex.practicum.yaBlog.service.CommentService;
-import ru.yandex.practicum.yaBlog.service.LikeService;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

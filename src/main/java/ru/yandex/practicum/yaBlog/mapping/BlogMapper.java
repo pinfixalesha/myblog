@@ -50,7 +50,8 @@ public class BlogMapper {
                 .tags(blogEditModel.getTags())
                 .build();
 
-        if (!StringUtils.isEmpty(blogEditModel.getPicture().getOriginalFilename())) {
+        if ((blogEditModel.getPicture()!=null) &&
+                (!StringUtils.isEmpty(blogEditModel.getPicture().getOriginalFilename()))) {
             try {
                 blogEntity.setPicture(Base64.getEncoder().encodeToString(blogEditModel.getPicture().getBytes()));
             } catch (Exception e) {

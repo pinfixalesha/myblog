@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,9 +33,9 @@ public class CommentEntity {
         }
 
         // Если id null, сравниваем остальные поля
-        return datetime != null ? datetime.equals(that.datetime) : that.datetime == null &&
-                blog != null ? blog.equals(that.blog) : that.blog == null &&
-                comment != null ? comment.equals(that.comment) : that.comment == null;
+        return (Objects.equals(datetime, that.datetime))  &&
+                (Objects.equals(comment, that.comment))  &&
+                (Objects.equals(blog, that.blog));
     }
 
 }
