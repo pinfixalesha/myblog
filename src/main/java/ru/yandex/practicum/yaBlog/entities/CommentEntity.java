@@ -18,4 +18,23 @@ public class CommentEntity {
     private Timestamp datetime;
     private Long blog;
     private String comment;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true; // Сравнение ссылок
+        if (o == null || getClass() != o.getClass()) return false; // Проверка на null и тип
+
+        CommentEntity that = (CommentEntity) o;
+
+        // Если id не null, сравниваем по id (уникальному полю)
+        if (id != null && that.id != null) {
+            return id.equals(that.id);
+        }
+
+        // Если id null, сравниваем остальные поля
+        return datetime != null ? datetime.equals(that.datetime) : that.datetime == null &&
+                blog != null ? blog.equals(that.blog) : that.blog == null &&
+                comment != null ? comment.equals(that.comment) : that.comment == null;
+    }
+
 }

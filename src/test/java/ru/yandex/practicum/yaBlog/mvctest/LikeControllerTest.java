@@ -1,10 +1,8 @@
-package ru.yandex.practicum.yaBlog.mvc;
+package ru.yandex.practicum.yaBlog.mvctest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import ru.yandex.practicum.yaBlog.YaBlogApplication;
-import ru.yandex.practicum.yaBlog.configuration.DataSourceConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
@@ -21,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest(classes = YaBlogApplication.class)
-@ContextConfiguration(classes = DataSourceConfiguration.class)
 @TestPropertySource(locations = "classpath:application.yml")
 public class LikeControllerTest {
 

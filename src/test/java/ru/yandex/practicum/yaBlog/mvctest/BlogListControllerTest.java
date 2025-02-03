@@ -1,17 +1,14 @@
-package ru.yandex.practicum.yaBlog.mvc;
+package ru.yandex.practicum.yaBlog.mvctest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ru.yandex.practicum.yaBlog.YaBlogApplication;
-import ru.yandex.practicum.yaBlog.configuration.DataSourceConfiguration;
-import ru.yandex.practicum.yaBlog.configuration.FileuploadConfiguration;
 import ru.yandex.practicum.yaBlog.entities.BlogEntity;
 import ru.yandex.practicum.yaBlog.repository.BlogRepository;
 
@@ -22,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest(classes = YaBlogApplication.class)
-@ContextConfiguration(classes = {DataSourceConfiguration.class, FileuploadConfiguration.class})
 @TestPropertySource(locations = "classpath:application.yml")
 public class BlogListControllerTest {
 
