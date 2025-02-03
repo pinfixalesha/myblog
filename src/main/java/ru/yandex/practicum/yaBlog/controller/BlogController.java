@@ -18,7 +18,6 @@ import ru.yandex.practicum.yaBlog.model.CommentsModel;
 import ru.yandex.practicum.yaBlog.model.FilterModel;
 import ru.yandex.practicum.yaBlog.service.BlogService;
 import ru.yandex.practicum.yaBlog.service.CommentService;
-import ru.yandex.practicum.yaBlog.service.LikeService;
 
 import java.util.List;
 import java.util.Optional;
